@@ -46,3 +46,20 @@ jobs:
 
       - name: Docker Hub push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/config-server
+
+  run-docker-image-on-ec2:
+    needs: build-docker-image
+    runs-on: self-hosted
+
+    steps:
+      - name: docker pull
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/config-server
+
+      - name: docker stop container
+        run: sudo docker stop config-server
+
+      - name: docker run new container
+        run: sudo docker run -d --name config-server --rm -p 8071:8071 --net cheonma-network ${{ secrets.DOCKERHUB_USERNAME }}/config-server
+
+      - name: delete old docker image
+        run: sudo docker system prune -f
