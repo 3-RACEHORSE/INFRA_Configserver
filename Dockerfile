@@ -1,4 +1,4 @@
-FROM openjdk:17-slim as build
+FROM bellsoft/liberica-openjdk-alpine:17 as build
 WORKDIR /workspace/app
 
 # Copy the built JAR file
