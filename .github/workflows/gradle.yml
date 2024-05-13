@@ -70,13 +70,14 @@ jobs:
       - name: Check if container is running
         id: check-container
         run: |
-          if sudo docker ps | grep -q config-server; then
-            echo "::set-output name=running::true"
+          if sudo docker ps -a | grep -q config-server; then
+            echo "running=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=running::false"
+            echo "running=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Stop docker container
+        if: steps.check-container.outputs.running == 'true'
         run: sudo docker stop config-server
 
       - name: docker run new container
