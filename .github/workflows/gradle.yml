@@ -20,9 +20,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5
-
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
         with:
@@ -31,6 +28,9 @@ jobs:
           spring.cloud.config.server.git.username: ${{ secrets.GIT_USERNAME }}
           spring.cloud.config.server.git.password: ${{ secrets.GIT_PASSWORD }}
           encrypt.key: ${{ secrets.ENCRYPT_KEY }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
         run: ./gradlew clean build
