@@ -1,0 +1,27 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active:
+      - git
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/SKY-HORSE-MAN-POWER/INFRA_config.git
+          default-label: main
+          username: ${username}
+          password: ${password}
+          search-paths:
+            - auction-service
+            - member-service
+            - subscribe-service
+        encrypt:
+          enabled: false
+
+encrypt:
+  key: ${key}
