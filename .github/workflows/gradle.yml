@@ -59,7 +59,7 @@ jobs:
 
   run-docker-image-on-ec2:
     needs: build-docker-image
-    runs-on: config-server
+    runs-on: self-hosted
 
     steps:
       - name: docker pull
