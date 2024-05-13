@@ -59,7 +59,7 @@ jobs:
 
   run-docker-image-on-ec2:
     needs: build-docker-image
-    runs-on: [self-hosted, cheonma-runner]
+    runs-on: config-server
 
     steps:
       - name: docker pull
