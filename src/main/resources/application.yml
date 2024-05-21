@@ -19,7 +19,7 @@ spring:
           search-paths:
             - auction-service
             - member-service
-            - subscribe-service
+            - chat-service
         encrypt:
           enabled: false
 
