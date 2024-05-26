@@ -8,7 +8,12 @@ spring:
     active:
       - git
 
+  kafka:
+    bootstrap-servers: kafka:9092
+
   cloud:
+    bus:
+      enabled: true
     config:
       server:
         git:
