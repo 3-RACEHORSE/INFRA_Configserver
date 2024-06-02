@@ -46,7 +46,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Build docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest -f Dockerfile .
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest -f Dockerfile .
 
       - name: Login docker
         uses: docker/login-action@v2
@@ -59,7 +59,7 @@ jobs:
 
   run-docker-image-on-ec2:
     needs: build-docker-image
-    runs-on: self-hosted
+    runs-on: new-runner
 
     steps:
       - name: Pull image from docker hub
@@ -76,12 +76,14 @@ jobs:
             echo "running=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Stop docker container
+      - name: Stop & remove docker container
         if: steps.check-container.outputs.running == 'true'
-        run: sudo docker stop config-server
+        run: |
+          sudo docker stop config-server
+          sudo docker rm config-server
 
       - name: docker run new container
-        run: sudo docker run -d --name config-server --rm -p 8071:8071 --net cheonma-network ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
+        run: sudo docker run -d --name config-server -p 8071:8071 --net cheonma-network ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
 
       - name: delete old docker image
         run: sudo docker system prune -f
