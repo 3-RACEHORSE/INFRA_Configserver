@@ -25,6 +25,8 @@ spring:
             - auction-service
             - member-service
             - chat-service
+            - payment-service
+            - notification-service
         encrypt:
           enabled: false
 
