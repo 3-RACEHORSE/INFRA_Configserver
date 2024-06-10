@@ -23,6 +23,7 @@ spring:
           password: ${password}
           search-paths:
             - auction-service
+            - auctionpost-service
             - member-service
             - chat-service
             - payment-service
