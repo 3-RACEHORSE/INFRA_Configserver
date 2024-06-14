@@ -28,6 +28,7 @@ spring:
             - chat-service
             - payment-service
             - notification-service
+            - batch-server
         encrypt:
           enabled: false
 
