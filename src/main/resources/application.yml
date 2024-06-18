@@ -29,6 +29,7 @@ spring:
             - payment-service
             - notification-service
             - batch-server
+            - admin-service
         encrypt:
           enabled: false
 
