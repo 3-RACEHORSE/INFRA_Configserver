@@ -89,7 +89,7 @@ jobs:
           sudo docker rm config-server
 
       - name: docker run new container
-        run: sudo docker run -d --name config-server -p 8071:8071 --net cheonma-network ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
+        run: sudo docker run -d --restart unless-stopped --name config-server -p 8071:8071 --net cheonma-network ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
 
       - name: delete old docker image
         run: sudo docker system prune -f
